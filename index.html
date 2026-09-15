@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Fish Arena — a fast browser fish survival game with local saves and peer-to-peer multiplayer." />
+  <title>Fish Arena</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main id="app">
+    <section id="auth-screen" class="screen">
+      <div class="panel auth-panel">
+        <div class="logo">🐟 <span>FISH ARENA</span></div>
+        <p class="tagline">Eat. Grow. Outswim everyone.</p>
+        <form id="auth-form">
+          <input id="email" type="email" autocomplete="email" placeholder="Email" required />
+          <input id="password" type="password" autocomplete="current-password" placeholder="Password (6+ characters)" minlength="6" required />
+          <div class="auth-actions">
+            <button type="submit" data-action="signin">Sign in</button>
+            <button type="button" class="secondary" data-action="signup">Create account</button>
+          </div>
+        </form>
+        <button id="guest-btn" class="ghost">Play as guest</button>
+        <p id="auth-status" class="status"></p>
+        <small>Guest progress is stored only in this browser. Account sync requires Firebase configuration.</small>
+      </div>
+    </section>
+
+    <section id="menu-screen" class="screen hidden">
+      <div class="panel menu-panel">
+        <div class="topline"><div class="logo">🐟 <span>FISH ARENA</span></div><button id="signout-btn" class="ghost">Sign out</button></div>
+        <h1>Rule the reef.</h1>
+        <p id="welcome">Choose your fish and dive in.</p>
+        <div class="menu-grid">
+          <button id="play-btn" class="big-button">🌊 Play Solo</button>
+          <button id="host-btn" class="big-button secondary">👑 Host P2P Room</button>
+          <button id="join-btn" class="big-button secondary">🔗 Join P2P Room</button>
+        </div>
+        <div class="skins">
+          <h2>Skins</h2>
+          <div id="skin-list" class="skin-list"></div>
+        </div>
+        <div class="stats"><span>Best size: <b id="best-size">1.0</b></span><span>Fish eaten: <b id="best-eaten">0</b></span></div>
+        <p id="room-status" class="status"></p>
+      </div>
+    </section>
+
+    <section id="game-screen" class="hidden game-screen">
+      <canvas id="game" aria-label="Fish Arena game"></canvas>
+      <div class="hud">
+        <div class="hud-card"><b id="size-label">1.0</b><small>SIZE</small></div>
+        <div class="hud-card"><b id="score-label">0</b><small>EATEN</small></div>
+        <button id="leave-btn" class="hud-button">☰</button>
+      </div>
+      <div id="room-code" class="room-code hidden"></div>
+      <div id="game-tip" class="game-tip">Move with mouse/touch. Eat smaller fish!</div>
+    </section>
+  </main>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
