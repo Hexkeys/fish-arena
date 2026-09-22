@@ -10,3 +10,5 @@ services:
         sync: false
       - key: RESOLUTION
         value: 1280x800x24
+      - key: APP_PORT
+        value: 10000
