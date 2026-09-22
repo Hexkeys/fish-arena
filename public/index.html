@@ -3,27 +3,32 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Remote Browser</title>
-  <link rel="stylesheet" href="/style.css">
+  <title>Remote Fish Arena Device</title>
+  <style>
+    html,body{margin:0;height:100%;background:#111827;color:#fff;font:14px system-ui}
+    #status{position:fixed;z-index:10;top:10px;left:10px;padding:8px 12px;border-radius:8px;background:#111827cc}
+  </style>
 </head>
 <body>
-  <header class="toolbar">
-    <button id="back" title="Back">←</button>
-    <button id="forward" title="Forward">→</button>
-    <button id="reload" title="Reload">↻</button>
-    <input id="address" value="https://example.com" autocomplete="off" spellcheck="false">
-    <button id="go">Go</button>
-    <button id="home">Home</button>
-  </header>
-  <main>
-    <section class="welcome">
-      <p class="eyebrow">REMOTE BROWSER</p>
-      <h1>Browse the web from your Render server.</h1>
-      <p>Enter a URL above to load a public HTTP or HTTPS page through the remote browser proxy.</p>
-    </section>
-    <iframe id="view" title="Remote browser viewport"
-      sandbox="allow-forms allow-modals allow-popups allow-scripts"></iframe>
-  </main>
-  <script src="/app.js"></script>
+  <div id="status">Connecting to remote device…</div>
+  <script type="module">
+    import RFB from './core/rfb.js';
+    const status=document.getElementById('status');
+    const target=document.createElement('div');
+    target.style.cssText='position:fixed;inset:0';
+    document.body.appendChild(target);
+    const scheme=location.protocol==='https:'?'wss':'ws';
+    const rfb=new RFB(target,scheme+'://'+location.host+'/websockify');
+    rfb.scaleViewport=true;
+    rfb.resizeSession=false;
+    rfb.viewOnly=false;
+    rfb.showDotCursor=true;
+    rfb.addEventListener('connect',()=>status.textContent='Connected to Remote Fish Arena Device');
+    rfb.addEventListener('disconnect',()=>status.textContent='Disconnected — reload to reconnect');
+    rfb.addEventListener('credentialsrequired',()=>{
+      const p=prompt('VNC password');
+      if(p!==null)rfb.sendCredentials({password:p});
+    });
+  </script>
 </body>
 </html>
