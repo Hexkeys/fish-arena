@@ -1,0 +1,10 @@
+services:
+  remote-device:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      PORT: 8080
+      APP_PORT: 10000
+      VNC_PASSWORD: changeme
+      RESOLUTION: 1280x800x24
