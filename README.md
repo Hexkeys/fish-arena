@@ -1,48 +1,37 @@
-# 🐟 Fish Arena
+# Remote Browser
 
-A browser-based fish survival arena inspired by the eat-to-grow genre, with original UI/game code, local progression, skins, and a WebRTC multiplayer foundation.
+A lightweight browser-style web workspace converted from the original Fish Arena project.
 
 ## Features
 
-- Fast canvas-based fish arena gameplay
-- Eat smaller fish to grow
-- Five selectable fish skins
-- Local progress using `localStorage`
-- Guest mode
-- Account UI ready for Firebase/Auth0/Supabase integration
-- WebRTC peer-to-peer transport foundation
-- Responsive mouse + touch controls
+- Address bar for public HTTP/HTTPS pages
+- Back, forward, reload, and home controls
+- Server-side page fetching through an Express proxy
+- Basic protection against local/private destinations
+- Sandboxed remote-page iframe
+- Render-ready Node web service
 
 ## Run locally
 
-Because this is an ES-module browser app, serve the folder with any static server. For example:
-
 ```bash
-python -m http.server 8080
+npm install
+npm start
 ```
 
-Then open `http://localhost:8080`.
+Open `http://localhost:10000`.
 
-## Multiplayer architecture
+## Deploy to Render
 
-WebRTC can carry the actual gameplay connection peer-to-peer, but peers still need a **signaling channel** to exchange SDP offers/answers and ICE candidates. GitHub Pages is static hosting, so it cannot itself provide signaling.
+This repo includes `render.yaml`. Deploy it as a Node web service with:
 
-The next production step is to add a tiny WebSocket signaling service (for example Cloudflare Workers, Fly.io, Render, or a small Node server). After signaling, the `PeerRoom` transport in `app.js` can be expanded into room creation, player state replication, collision authority, reconnects, and host migration.
+- Build command: `npm install`
+- Start command: `npm start`
 
-## Accounts
+The server listens on `0.0.0.0` and uses Render's `PORT` environment variable.
 
-The current sign-in screen deliberately stores a local identity only. Never store real passwords in `localStorage`. For production authentication, connect the UI to a hosted authentication provider and store only the provider session/token in a secure manner.
+## Limitations
 
-## Roadmap
-
-- [ ] WebRTC signaling service
-- [ ] Authoritative multiplayer state + interpolation
-- [ ] Matchmaking / room browser
-- [ ] Cloud account progression
-- [ ] More maps, hazards, boosts, quests and skins
-- [ ] Sound and music
-- [ ] Mobile joystick
-- [ ] Anti-cheat validation
+This is a lightweight web proxy, not a full Chrome/Firefox replacement. Some sites will not work because they depend on browser features, authentication, WebSockets, cross-origin behavior, or strict security policies. Only use it for websites you are allowed to access.
 
 ## License
 
