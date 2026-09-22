@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Remote Browser</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header class="toolbar">
+    <button id="back" title="Back">←</button>
+    <button id="forward" title="Forward">→</button>
+    <button id="reload" title="Reload">↻</button>
+    <input id="address" value="https://example.com" autocomplete="off" spellcheck="false">
+    <button id="go">Go</button>
+    <button id="home">Home</button>
+  </header>
+  <main>
+    <section class="welcome">
+      <p class="eyebrow">REMOTE BROWSER</p>
+      <h1>Browse the web from your Render server.</h1>
+      <p>Enter a URL above to load a public HTTP or HTTPS page through the remote browser proxy.</p>
+    </section>
+    <iframe id="view" title="Remote browser viewport"
+      sandbox="allow-forms allow-modals allow-popups allow-scripts"></iframe>
+  </main>
+  <script src="/app.js"></script>
+</body>
+</html>
