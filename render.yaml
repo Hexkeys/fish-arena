@@ -1,9 +1,12 @@
 services:
   - type: web
     name: remote-browser
-    runtime: node
+    env: docker
     plan: free
-    buildCommand: npm install
-    startCommand: npm start
-    healthCheckPath: /health
-    autoDeployTrigger: commit
+    region: oregon
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: VNC_PASSWORD
+        sync: false
+      - key: RESOLUTION
+        value: 1280x800x24
