@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Remote Browser</title><link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header class="bar">
+  <div class="brand">◉ Remote Browser</div>
+  <button id="back" title="Back">←</button><button id="forward" title="Forward">→</button><button id="reload" title="Reload">↻</button>
+  <form id="nav"><input id="url" value="https://example.com" autocomplete="off" spellcheck="false"><button>Go</button></form>
+  <button id="home">Home</button>
+</header>
+<main>
+  <section class="welcome" id="welcome">
+    <div class="hero">
+      <div class="eyebrow">REMOTE WEB WORKSPACE</div>
+      <h1>Browse from one clean tab.</h1>
+      <p>Enter a public website above. Pages are fetched through this server so the preview stays inside your Remote Browser.</p>
+      <div class="cards">
+        <div><b>⌕ Address bar</b><span>Open public HTTP or HTTPS pages.</span></div>
+        <div><b>↶ Navigation</b><span>Back, forward and reload controls.</span></div>
+        <div><b>↗ Render-ready</b><span>Runs as a Node web service.</span></div>
+      </div>
+    </div>
+  </section>
+  <iframe id="view" title="Remote web page" sandbox="allow-forms allow-modals allow-popups allow-scripts allow-same-origin"></iframe>
+</main>
+<script src="/app.js"></script>
+</body>
+</html>
