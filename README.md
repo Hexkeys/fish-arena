@@ -1,49 +1,56 @@
-# 🐟 Fish Arena
+# 🐟 Fish Arena — Remote Device
 
-A browser-based fish survival arena inspired by the eat-to-grow genre, with original UI/game code, local progression, skins, and a WebRTC multiplayer foundation.
+Fish Arena now runs as an interactive remote Linux device instead of a browser proxy.
 
-## Features
+A Debian Linux desktop runs in Docker with Xvfb, Fluxbox, Chromium, xterm, Thunar, x11vnc, and noVNC. When you connect, you control the whole remote desktop with your mouse and keyboard, and Fish Arena opens inside the remote desktop.
 
-- Fast canvas-based fish arena gameplay
-- Eat smaller fish to grow
-- Five selectable fish skins
-- Local progress using `localStorage`
-- Guest mode
-- Account UI ready for Firebase/Auth0/Supabase integration
-- WebRTC peer-to-peer transport foundation
-- Responsive mouse + touch controls
+## What you get
+
+- Full remote Linux desktop
+- Fish Arena running inside the remote desktop
+- Mouse and keyboard control
+- Terminal through xterm
+- File manager through Thunar
+- noVNC browser-based remote display
+- Docker deployment for Render or another Docker host
 
 ## Run locally
 
-Because this is an ES-module browser app, serve the folder with any static server. For example:
-
 ```bash
-python -m http.server 8080
+docker compose up --build
 ```
 
-Then open `http://localhost:8080`.
+Then open:
 
-## Multiplayer architecture
+```
+http://localhost:8080
+```
 
-WebRTC can carry the actual gameplay connection peer-to-peer, but peers still need a **signaling channel** to exchange SDP offers/answers and ICE candidates. GitHub Pages is static hosting, so it cannot itself provide signaling.
+Set a real `VNC_PASSWORD` before exposing the device publicly.
 
-The next production step is to add a tiny WebSocket signaling service (for example Cloudflare Workers, Fly.io, Render, or a small Node server). After signaling, the `PeerRoom` transport in `app.js` can be expanded into room creation, player state replication, collision authority, reconnects, and host migration.
+## Architecture
 
-## Accounts
+- Linux display: Xvfb
+- Window manager: Fluxbox
+- Main app: Chromium loading the Fish Arena app
+- Terminal: xterm
+- File manager: Thunar
+- VNC server: x11vnc
+- Remote web client: noVNC + websockify
+- App server: Node.js + Express
 
-The current sign-in screen deliberately stores a local identity only. Never store real passwords in `localStorage`. For production authentication, connect the UI to a hosted authentication provider and store only the provider session/token in a secure manner.
+## Render
 
-## Roadmap
+The included `render.yaml` deploys the Docker image as a web service.
 
-- [ ] WebRTC signaling service
-- [ ] Authoritative multiplayer state + interpolation
-- [ ] Matchmaking / room browser
-- [ ] Cloud account progression
-- [ ] More maps, hazards, boosts, quests and skins
-- [ ] Sound and music
-- [ ] Mobile joystick
-- [ ] Anti-cheat validation
+Set `VNC_PASSWORD` to a strong password in Render.
 
-## License
+The service name remains `remote-browser`; the service itself now provides the remote Linux device described above.
 
-MIT
+## Security
+
+The VNC session provides interactive access to the remote desktop. Use a strong password and HTTPS. Do not expose an unauthenticated remote desktop to the public internet.
+
+## Fish Arena
+
+The original Fish Arena gameplay, skins, local progression, guest mode, and WebRTC foundation remain in the project. The difference is that the game is now launched inside the remote Linux desktop instead of being exposed as a browser-proxy service.
